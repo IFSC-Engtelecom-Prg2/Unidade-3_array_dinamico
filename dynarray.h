@@ -5,6 +5,8 @@
 #ifndef PROJ3_DYNARRAY_H
 #define PROJ3_DYNARRAY_H
 
+#include <stdexcept>
+
 // a definição da API do array dinâmico !
 namespace prg2 {
     // a capacidade inicial default de um array dinãmico
@@ -55,6 +57,9 @@ namespace prg2 {
     // Insere um dado numa posição da array dinâmico
     // Se posição inálida, dispara exceção invalid_argument
     void dynarray_insere(Dynarray & v, int dado, int posicao);
+
+    // Retorna a capacidade da array dinâmico
+    int dynarray_capacidade(const Dynarray & v);
 
     // Retorna o tamanho da array dinâmico
     int dynarray_tamanho(const Dynarray & v);

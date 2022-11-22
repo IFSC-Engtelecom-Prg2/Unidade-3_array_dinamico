@@ -39,13 +39,15 @@ TEST_F(TesteDynarray, CriarVazio) {
     auto v = prg2::dynarray_cria();
     ASSERT_TRUE(prg2::dynarray_vazio(v));
     ASSERT_EQ(prg2::dynarray_tamanho(v), 0);
+    ASSERT_EQ(prg2::dynarray_capacidade(v), prg2::DefaultCapacity);
 }
 
 TEST_F(TesteDynarray, CriarComCapacidade) {
     const int InitCap = 64;
     auto v = prg2::dynarray_cria(InitCap);
     ASSERT_TRUE(prg2::dynarray_vazio(v));
-    ASSERT_EQ(prg2::dynarray_tamanho(v), InitCap);
+    ASSERT_EQ(prg2::dynarray_tamanho(v), 0);
+    ASSERT_EQ(prg2::dynarray_capacidade(v), InitCap);
 }
 
 TEST_F(TesteDynarray, DestroiArray) {
@@ -148,8 +150,9 @@ TEST_F(TesteDynarray, InserirIterar) {
     for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
         prg2::dynarray_insere(v, j+Val);
     }
-    for (auto j=2*prg2::DefaultCapacity-1; j >= 0; j--) {
-        ASSERT_EQ(prg2::dynarray_acessa(v, j), j+Val);
+    int val = -1 + 2*prg2::DefaultCapacity + Val;
+    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
+        ASSERT_EQ(prg2::dynarray_acessa(v, j), val--);
     }
 }
 
@@ -188,7 +191,7 @@ TEST_F(TesteDynarray, RemoveFim) {
     }
     for (auto j=0; j < prg2::DefaultCapacity; j++) {
         ASSERT_EQ(prg2::dynarray_atras(v), j);
-        prg2::dynarray_remove_inicio(v);
+        prg2::dynarray_remove_fim(v);
         ASSERT_EQ(prg2::dynarray_tamanho(v), prg2::DefaultCapacity-(j+1));
     }
 }
@@ -216,7 +219,7 @@ TEST_F(TesteDynarray, InserePosicao) {
 //    ASSERT_EQ(prg2::dynarray_tamanho(v), len+3);
 
     // posição inválida
-    ASSERT_THROW(prg2::dynarray_insere(v, 11, len), std::invalid_argument);
+    ASSERT_THROW(prg2::dynarray_insere(v, 11, 2*len), std::invalid_argument);
 //    ASSERT_EQ(prg2::dynarray_atras(v), 77);
 //    ASSERT_EQ(prg2::dynarray_tamanho(v), len+3);
 
