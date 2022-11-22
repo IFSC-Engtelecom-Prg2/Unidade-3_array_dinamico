@@ -3,4 +3,4 @@ project(deque)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(dynarray main.cpp dynarray.h)
+add_executable(dynarray main.cpp dynarray.h dynarray.cpp)
