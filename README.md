@@ -17,3 +17,5 @@ Para rodar os testes, selecione a configuração _runTest_, como indicado na fig
 Para executar os testes, clique no botão _Run_, e observe os resultados no painel inferior do CLion:
 
 ![Execução dos testes](pics/clion-dynarray-exec-ok.png)
+
+Além desses testes, você pode criar seus próprioes testes em [main.cpp](/main.cpp). Veja que ali já há um código para realizar alguns testes do array dinâmico.
