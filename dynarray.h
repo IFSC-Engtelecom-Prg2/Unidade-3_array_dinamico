@@ -60,7 +60,7 @@ namespace prg2 {
     int dynarray_tamanho(const Dynarray & v);
 
     // Verifica se array dinâmico está vazia
-    bool dynarray_vazia(const Dynarray & v);
+    bool dynarray_vazio(const Dynarray & v);
 
     // Acessa um dado de uma posição da array dinâmico
     // Se posição inálida, dispara exceção invalid_argument
