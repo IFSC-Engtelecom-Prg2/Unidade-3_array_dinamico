@@ -1,54 +1,60 @@
 #include <iostream>
-#include <string>
 #include "dynarray.h"
 
 using std::cout;
+using std::cin;
 using std::endl;
-using std::string;
-
-// gera uma string com uma representação do conteúdo do array dinâmico
-// Parâmetros:
-//  q: o array dinâmico
-// delim: um caractere a ser usado como delimitador entre os valores do array dinâmico na string
-// Resultado: uma string com o conteúdo do array dinâmico
-string dynarray2string(const prg2::dynarray<int> & q, char delim=',') {
-    string r;
-
-    // somente gera a string de resultado se deque não estiver vazio
-    if (! prg2::dynarray_vazio(q)) {
-        auto len = prg2::dynarray_tamanho(q);
-        // itera o deque, convertendo seus valores para string e unindo-os com o caractere delim
-        for (int j = 0; j < len; j++) {
-            r += std::to_string(prg2::dynarray_acessa(q, j)) + delim;
-        }
-        // remove o caractere delimitador em excesso
-        r.pop_back();
-    }
-
-    return r;
-}
 
 int main() {
-    // cria um deque que armazena int
-    prg2::dynarray<int> q1;
+    prg2::Dynarray v = prg2::dynarray_cria();
 
-    // acrescenta dados ao início
-    prg2::dynarray_insere(q1, 7);
-    prg2::dynarray_insere(q1, 9);
-    cout << "Deque após inserir alguns dados: " << dynarray2string(q1) << endl;
+    cout << "Tamanho (deve ser zero): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser true)=" << prg2::dynarray_vazia(v) << endl;
 
-    // acrescenta dados ao final
-    prg2::dynarray_anexa(q1, 2);
-    prg2::dynarray_anexa(q1, 4);
-    cout << "Deque após anexar mais alguns dados: " << dynarray2string(q1) << endl;
+    prg2::dynarray_anexa(v, 5);
+    prg2::dynarray_anexa(v, 7);
+    cout << "Tamanho (deve ser dois): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser false)=" << prg2::dynarray_vazia(v) << endl;
+    cout << "Valor do início (deve ser 5): " << prg2::dynarray_frente(v) << endl;
+    cout << "Valor do fim (deve ser 7): " << prg2::dynarray_atras(v) << endl;
 
-    // Remove um dado do início
-    prg2::dynarray_remove_inicio(q1);
-    cout << "Deque após remover do início: " << dynarray2string(q1) << endl;
+    prg2::dynarray_insere(v, 2);
+    prg2::dynarray_insere(v, 4);
+    cout << "Tamanho (deve ser quatro): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser false)=" << prg2::dynarray_vazia(v) << endl;
+    cout << "Valor do início (deve ser 4): " << prg2::dynarray_frente(v) << endl;
+    cout << "Valor do fim (deve ser 7): " << prg2::dynarray_atras(v) << endl;
 
-    // Remove um dado do final
-    prg2::dynarray_remove_final(q1);
-    cout << "Deque após remover do final: " << dynarray2string(q1) << endl;
+    // insere 8 na posição 2
+    prg2::dynarray_insere(v, 8, 2);
+    cout << "Tamanho (deve ser cinco): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser false)=" << prg2::dynarray_vazia(v) << endl;
+    cout << "Valor do início (deve ser 4): " << prg2::dynarray_frente(v) << endl;
+    cout << "Valor do fim (deve ser 7): " << prg2::dynarray_atras(v) << endl;
+
+    prg2::dynarray_remove_inicio(v);
+    cout << "Tamanho (deve ser quatro): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser false)=" << prg2::dynarray_vazia(v) << endl;
+    cout << "Valor do início (deve ser 2): " << prg2::dynarray_frente(v) << endl;
+    cout << "Valor do fim (deve ser 7): " << prg2::dynarray_atras(v) << endl;
+
+    prg2::dynarray_remove_fim(v);
+    cout << "Tamanho (deve ser três): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser false)=" << prg2::dynarray_vazia(v) << endl;
+    cout << "Valor do início (deve ser 2): " << prg2::dynarray_frente(v) << endl;
+    cout << "Valor do fim (deve ser 5): " << prg2::dynarray_atras(v) << endl;
+
+    // iterar a lista ???
+    for (int pos=0; pos < prg2::dynarray_tamanho(v); pos++) {
+        cout << prg2::dynarray_acessa(v, pos) << endl;
+    }
+
+    // e limpá-la ...
+    prg2::dynarray_limpa(v);
+    cout << "Tamanho (deve ser zero): " << prg2::dynarray_tamanho(v) << endl;
+    cout << "Vazia (deve ser true)=" << prg2::dynarray_vazia(v) << endl;
+
+    prg2::dynarray_destroi(v);
 
     return 0;
 }
