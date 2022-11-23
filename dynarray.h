@@ -30,12 +30,12 @@ namespace prg2 {
     // Acessa o dado da frente da array dinâmico
     // se array dinâmico vazia: o que acontece ????
     // DISPARA EXCEÇÃO do tipo invalid_argument
-    int dynarray_frente(const Dynarray & v);
+    int& dynarray_frente(const Dynarray & v);
 
     // Acessa o dado do final da array dinâmico
     // se array dinâmico vazia: o que acontece ????
     // DISPARA EXCEÇÃO do tipo invalid_argument
-    int dynarray_atras(const Dynarray & v);
+    int& dynarray_atras(const Dynarray & v);
 
     // esvazia uma array dinâmico
     void dynarray_limpa(Dynarray & v);
@@ -69,7 +69,7 @@ namespace prg2 {
 
     // Acessa um dado de uma posição da array dinâmico
     // Se posição inálida, dispara exceção invalid_argument
-    int dynarray_acessa(const Dynarray & v, int posicao);
+    int& dynarray_acessa(const Dynarray & v, int posicao);
 
 }
 #endif //PROJ3_DYNARRAY_H
