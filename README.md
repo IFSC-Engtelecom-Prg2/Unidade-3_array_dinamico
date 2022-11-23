@@ -4,7 +4,7 @@
 
 Aqui você encontra o código inicial para a implementação do array dinâmico. Esse código define a [API ](https://pt.wikipedia.org/wiki/Interface_de_programa%C3%A7%C3%A3o_de_aplica%C3%A7%C3%B5es) do array dinâmico, na forma de um conjunto de funções declaradas em [dynarray.h](/dynarray.h). Para implementar o seu array dinâmico, você deve:
 * Completar a declaração do tipo de dados [Dynarray](https://github.com/IFSC-Engtelecom-Prg2/Unidade-3_array_dinamico/blob/b1de7b1991ea3a4570d4cc3a89e4946139823564/dynarray.h#L15), o qual representa arrays dinâmicos neste estudo de caso
-* Implementar as funções que correspondem s operações do array dinâmico (implemente-as em [dynarray.cpp](/dynarray.cpp))
+* Implementar as funções que correspondem as operações do array dinâmico (implemente-as em [dynarray.cpp](/dynarray.cpp))
 
 ## Teste do array dinâmico
 
