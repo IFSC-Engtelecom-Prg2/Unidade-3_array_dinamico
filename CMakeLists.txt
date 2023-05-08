@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.14)
-project(dynarray)
+cmake_minimum_required(VERSION 3.21)
+project(vetor_dinamico)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(dynarray main.cpp dynarray.h dynarray.cpp)
+add_executable(vetor main.cpp vetor.cpp)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -13,5 +13,5 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 include_directories(googletest/include googletest .)
-add_executable(runTest  runTest.cpp dynarray.h dynarray.cpp)
+add_executable(runTest  runTest.cpp vetor.cpp)
 target_link_libraries(runTest gtest gtest_main)

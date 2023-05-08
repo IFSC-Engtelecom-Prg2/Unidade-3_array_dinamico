@@ -14,7 +14,8 @@
 #include <fstream>
 #include <list>
 #include <string>
-#include "dynarray.h"
+#include <cmath>
+#include "vetor.h"
 #include "gtest/gtest.h"
 
 using namespace std;
@@ -25,7 +26,7 @@ protected:
         srand(clock());
     }
 
-    void escreva_lista(list<int> & l, const string & sep, ostream & out) {
+    void escreva_lista(const list<int> & l, const string & sep, ostream & out) {
         if (l.empty()) return;
         int n = l.size();
         auto it=l.begin();
@@ -36,191 +37,186 @@ protected:
 };
 
 TEST_F(TesteDynarray, CriarVazio) {
-    auto v = prg2::dynarray_cria();
-    ASSERT_TRUE(prg2::dynarray_vazio(v));
-    ASSERT_EQ(prg2::dynarray_tamanho(v), 0);
-    ASSERT_EQ(prg2::dynarray_capacidade(v), prg2::DefaultCapacity);
-}
-
-TEST_F(TesteDynarray, CriarComCapacidade) {
-    const int InitCap = 64;
-    auto v = prg2::dynarray_cria(InitCap);
-    ASSERT_TRUE(prg2::dynarray_vazio(v));
-    ASSERT_EQ(prg2::dynarray_tamanho(v), 0);
-    ASSERT_EQ(prg2::dynarray_capacidade(v), InitCap);
+    auto v = prg2::vetor_cria();
+    ASSERT_TRUE(prg2::vetor_vazio(v));
+    ASSERT_EQ(prg2::vetor_tamanho(v), 0);
+    ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize);
 }
 
 TEST_F(TesteDynarray, DestroiArray) {
-    auto v = prg2::dynarray_cria();
-    ASSERT_NO_THROW(prg2::dynarray_destroi(v));
+    auto v = prg2::vetor_cria();
+    ASSERT_NO_THROW(prg2::vetor_destroi(v));
 }
 
 TEST_F(TesteDynarray, AnexarSemExpandir) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        prg2::dynarray_anexa(v, j);
-        ASSERT_FALSE(prg2::dynarray_vazio(v));
-        ASSERT_EQ(prg2::dynarray_tamanho(v), j+1);
+    for (auto j=0; j < prg2::MinSize; j++) {
+        prg2::vetor_anexa(v, j);
+        ASSERT_FALSE(prg2::vetor_vazio(v));
+        ASSERT_EQ(prg2::vetor_tamanho(v), j+1);
     }
 }
 
 TEST_F(TesteDynarray, InserirSemExpandir) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        prg2::dynarray_insere(v, j);
-        ASSERT_FALSE(prg2::dynarray_vazio(v));
-        ASSERT_EQ(prg2::dynarray_tamanho(v), j+1);
+    for (auto j=0; j < prg2::MinSize; j++) {
+
+        prg2::vetor_insere(v, j);
+        ASSERT_FALSE(prg2::vetor_vazio(v));
+        ASSERT_EQ(prg2::vetor_tamanho(v), j+1);
     }
 }
 
 TEST_F(TesteDynarray, FrenteVazio) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    ASSERT_THROW(prg2::dynarray_frente(v), std::invalid_argument);
+    ASSERT_THROW(prg2::vetor_frente(v), std::invalid_argument);
 }
 
 TEST_F(TesteDynarray, AtrasVazio) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    ASSERT_THROW(prg2::dynarray_atras(v), std::invalid_argument);
+    ASSERT_THROW(prg2::vetor_atras(v), std::invalid_argument);
 }
 
 TEST_F(TesteDynarray, AnexarAcessar) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
     const int Val = 5;
 
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        prg2::dynarray_anexa(v, j+Val);
-        ASSERT_EQ(prg2::dynarray_atras(v), j+Val);
+    for (auto j=0; j < prg2::MinSize; j++) {
+        prg2::vetor_anexa(v, j+Val);
+        ASSERT_EQ(prg2::vetor_atras(v), j+Val);
     }
 }
 
 TEST_F(TesteDynarray, InserirAcessar) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
     const int Val = 5;
 
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        prg2::dynarray_insere(v, j+Val);
-        ASSERT_EQ(prg2::dynarray_frente(v), j+Val);
+    for (auto j=0; j < prg2::MinSize; j++) {
+        prg2::vetor_insere(v, j+Val);
+        ASSERT_EQ(prg2::vetor_frente(v), j+Val);
     }
 }
 
 TEST_F(TesteDynarray, AnexarComExpansao) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
-        prg2::dynarray_anexa(v, j);
-        ASSERT_EQ(prg2::dynarray_atras(v), j);
-        ASSERT_EQ(prg2::dynarray_tamanho(v), j+1);
+    for (auto j=0; j < 2*prg2::MinSize; j++) {
+        prg2::vetor_anexa(v, j);
+        ASSERT_EQ(prg2::vetor_atras(v), j);
+        ASSERT_EQ(prg2::vetor_tamanho(v), j+1);
+        ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize*ceilf((float)j/prg2::MinSize));
     }
 }
 
 TEST_F(TesteDynarray, InserirComExpansao) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
-        prg2::dynarray_insere(v, j);
-        ASSERT_EQ(prg2::dynarray_frente(v), j);
-        ASSERT_EQ(prg2::dynarray_tamanho(v), j+1);
+    for (auto j=0; j < 2*prg2::MinSize; j++) {
+        prg2::vetor_insere(v, j);
+        ASSERT_EQ(prg2::vetor_frente(v), j);
+        ASSERT_EQ(prg2::vetor_tamanho(v), j+1);
+        ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize*ceilf((float)j/prg2::MinSize));
     }
 }
 
 TEST_F(TesteDynarray, AnexarIterar) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
     const int Val = 7;
 
-    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
-        prg2::dynarray_anexa(v, j+Val);
+    for (auto j=0; j < 2*prg2::MinSize; j++) {
+        prg2::vetor_anexa(v, j+Val);
     }
-    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
-        ASSERT_EQ(prg2::dynarray_acessa(v, j), j+Val);
+    for (auto j=0; j < 2*prg2::MinSize; j++) {
+        ASSERT_EQ(prg2::vetor_obtem(v, j), j+Val);
     }
 
     // posição inválida
-    ASSERT_THROW(prg2::dynarray_acessa(v, 100), std::invalid_argument);
-    ASSERT_THROW(prg2::dynarray_acessa(v, prg2::dynarray_tamanho(v)), std::invalid_argument);
+    ASSERT_THROW(prg2::vetor_obtem(v, 100), std::invalid_argument);
+    ASSERT_THROW(prg2::vetor_obtem(v, prg2::vetor_tamanho(v)), std::invalid_argument);
 }
 
 TEST_F(TesteDynarray, InserirIterar) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
     const int Val = 7;
 
-    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
-        prg2::dynarray_insere(v, j+Val);
+    for (auto j=0; j < 2*prg2::MinSize; j++) {
+        prg2::vetor_insere(v, j+Val);
     }
-    int val = -1 + 2*prg2::DefaultCapacity + Val;
-    for (auto j=0; j < 2*prg2::DefaultCapacity; j++) {
-        ASSERT_EQ(prg2::dynarray_acessa(v, j), val--);
+    int val = -1 + 2*prg2::MinSize + Val;
+    for (auto j=0; j < 2*prg2::MinSize; j++) {
+        ASSERT_EQ(prg2::vetor_obtem(v, j), val--);
     }
 }
 
 TEST_F(TesteDynarray, Limpa) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    for (auto j = 0; j < 2 * prg2::DefaultCapacity; j++) {
-        prg2::dynarray_insere(v, j);
+    for (auto j = 0; j < 2 * prg2::MinSize; j++) {
+        prg2::vetor_insere(v, j);
     }
-    ASSERT_FALSE(prg2::dynarray_vazio(v));
-    prg2::dynarray_limpa(v);
-    ASSERT_TRUE(prg2::dynarray_vazio(v));
-    ASSERT_EQ(prg2::dynarray_tamanho(v), 0);
+    ASSERT_FALSE(prg2::vetor_vazio(v));
+    prg2::vetor_limpa(v);
+    ASSERT_TRUE(prg2::vetor_vazio(v));
+    ASSERT_EQ(prg2::vetor_tamanho(v), 0);
 }
 
 TEST_F(TesteDynarray, RemoveInicio) {
-    auto v = prg2::dynarray_cria();
-    ASSERT_THROW(prg2::dynarray_remove_inicio(v), std::invalid_argument);
+    auto v = prg2::vetor_cria();
+    ASSERT_THROW(prg2::vetor_remove_inicio(v), std::invalid_argument);
 
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        prg2::dynarray_anexa(v, j);
+    for (auto j=0; j < prg2::MinSize; j++) {
+        prg2::vetor_anexa(v, j);
     }
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        ASSERT_EQ(prg2::dynarray_frente(v), j);
-        prg2::dynarray_remove_inicio(v);
-        ASSERT_EQ(prg2::dynarray_tamanho(v), prg2::DefaultCapacity-(j+1));
+    for (auto j=0; j < prg2::MinSize; j++) {
+        ASSERT_EQ(prg2::vetor_frente(v), j);
+        prg2::vetor_remove_inicio(v);
+        ASSERT_EQ(prg2::vetor_tamanho(v), prg2::MinSize-(j+1));
     }
 }
 
 TEST_F(TesteDynarray, RemoveFim) {
-    auto v = prg2::dynarray_cria();
-    ASSERT_THROW(prg2::dynarray_remove_fim(v), std::invalid_argument);
+    auto v = prg2::vetor_cria();
+    ASSERT_THROW(prg2::vetor_remove_fim(v), std::invalid_argument);
 
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        prg2::dynarray_insere(v, j);
+    for (auto j=0; j < prg2::MinSize; j++) {
+        prg2::vetor_insere(v, j);
     }
-    for (auto j=0; j < prg2::DefaultCapacity; j++) {
-        ASSERT_EQ(prg2::dynarray_atras(v), j);
-        prg2::dynarray_remove_fim(v);
-        ASSERT_EQ(prg2::dynarray_tamanho(v), prg2::DefaultCapacity-(j+1));
+    for (auto j=0; j < prg2::MinSize; j++) {
+        ASSERT_EQ(prg2::vetor_atras(v), j);
+        prg2::vetor_remove_fim(v);
+        ASSERT_EQ(prg2::vetor_tamanho(v), prg2::MinSize-(j+1));
     }
 }
 
 TEST_F(TesteDynarray, InserePosicao) {
-    auto v = prg2::dynarray_cria();
+    auto v = prg2::vetor_cria();
 
-    for (auto j = 0; j < prg2::DefaultCapacity/2; j++) {
-        prg2::dynarray_insere(v, j);
+    for (auto j = 0; j < prg2::MinSize/2; j++) {
+        prg2::vetor_insere(v, j);
     }
-    auto len = prg2::dynarray_tamanho(v);
+    auto len = prg2::vetor_tamanho(v);
     // no meio
-    prg2::dynarray_insere(v, 11, len/2);
-    ASSERT_EQ(prg2::dynarray_acessa(v, len/2), 11);
-    ASSERT_EQ(prg2::dynarray_tamanho(v), len+1);
+    prg2::vetor_insere(v, 11, len/2);
+    ASSERT_EQ(prg2::vetor_obtem(v, len/2), 11);
+    ASSERT_EQ(prg2::vetor_tamanho(v), len+1);
 
     // no inicio
-    prg2::dynarray_insere(v, 55, 0);
-    ASSERT_EQ(prg2::dynarray_frente(v), 55);
-    ASSERT_EQ(prg2::dynarray_tamanho(v), len+2);
+    prg2::vetor_insere(v, 55, 0);
+    ASSERT_EQ(prg2::vetor_frente(v), 55);
+    ASSERT_EQ(prg2::vetor_tamanho(v), len+2);
 
     // no final
-//    prg2::dynarray_insere(v, 11, len);
-//    ASSERT_EQ(prg2::dynarray_atras(v), 77);
-//    ASSERT_EQ(prg2::dynarray_tamanho(v), len+3);
+//    prg2::vetor_insere(v, 11, len);
+//    ASSERT_EQ(prg2::vetor_atras(v), 77);
+//    ASSERT_EQ(prg2::vetor_tamanho(v), len+3);
 
     // posição inválida
-    ASSERT_THROW(prg2::dynarray_insere(v, 11, 2*len), std::invalid_argument);
-//    ASSERT_EQ(prg2::dynarray_atras(v), 77);
-//    ASSERT_EQ(prg2::dynarray_tamanho(v), len+3);
+    ASSERT_THROW(prg2::vetor_insere(v, 11, 2*len), std::invalid_argument);
+//    ASSERT_EQ(prg2::vetor_atras(v), 77);
+//    ASSERT_EQ(prg2::vetor_tamanho(v), len+3);
 
 }
