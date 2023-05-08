@@ -6,7 +6,7 @@ Aqui você encontra o código inicial para a implementação do vetor dinâmico.
 * Completar a declaração do tipo de dados [VetorDinamico](https://github.com/IFSC-Engtelecom-Prg2/Unidade-3_array_dinamico/blob/8521f5fd18e1238615197d4581b054725e0ea62d/vetor.h#L14), o qual representa arrays dinâmicos neste estudo de caso
 * Implementar as funções que correspondem as operações do array dinâmico (implemente-as em [vetor.cpp](/vetor.cpp))
 
-## Teste do array dinâmico
+## Teste do vetor dinâmico
 
 A sua implementação do vetor dinâmico pode ser testada. Junto com o projeto CLion, existem testes das operações do vetor, então você pode realizar esses testes à medida que desenvolve as funções. Se os testes derem certo, então muito provavelmente seu vetor dinâmico está correto !
 
