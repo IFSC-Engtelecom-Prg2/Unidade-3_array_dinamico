@@ -2,10 +2,12 @@
 #include "vetor.h"
 
 using namespace prg2;
+using std::cout;
+using std::endl;
 
-void mostra_vetor(const VetorDinamico<int> & v) {
-    for (int i=0; i < tamanho(v) ; i++) {
-        cout << obtem(v, i) << ' ';
+void mostra_vetor(const VetorDinamico & v) {
+    for (int i=0; i < vetor_tamanho(v) ; i++) {
+        cout << vetor_obtem(v, i) << ' ';
     }
     cout << endl;
 }

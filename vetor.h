@@ -62,9 +62,14 @@ namespace prg2 {
     bool vetor_vazio(const VetorDinamico & v);
 
     // Acessa um dado que está na posição pos do vetor
-    // Obtém uma referência ao dado
+    // Obtém uma referência mutável ao dado
     // Se pos > tamanho-1, dispara exceção
     int &vetor_obtem(VetorDinamico &v, int pos);
+
+    // Acessa um dado que está na posição pos do vetor
+    // Obtém uma referência somente-leitura ao dado
+    // Se pos > tamanho-1, dispara exceção
+    const int &vetor_obtem(const VetorDinamico &v, int pos);
 
     // Remove um dado da posição pos do vetor
     // Se pos > tamanho-1, dispara exceção
