@@ -3,7 +3,7 @@
 * [Mais informações sobre o vetor dinâmico](https://moodle.ifsc.edu.br/mod/book/view.php?id=650470&chapterid=110230)
 
 Aqui você encontra o código inicial para a implementação do vetor dinâmico. Esse código define a [API ](https://pt.wikipedia.org/wiki/Interface_de_programa%C3%A7%C3%A3o_de_aplica%C3%A7%C3%B5es) do vetor dinâmico, na forma de um conjunto de funções declaradas em [vetor.h](/vetor.h). Para implementar o seu vetor dinâmico, você deve:
-* Completar a declaração do tipo de dados [VetorDinamico](https://github.com/IFSC-Engtelecom-Prg2/Unidade-3_array_dinamico/blob/b1de7b1991ea3a4570d4cc3a89e4946139823564/vetor.h#L15), o qual representa arrays dinâmicos neste estudo de caso
+* Completar a declaração do tipo de dados [VetorDinamico](https://github.com/IFSC-Engtelecom-Prg2/Unidade-3_array_dinamico/blob/8521f5fd18e1238615197d4581b054725e0ea62d/vetor.h#L14), o qual representa arrays dinâmicos neste estudo de caso
 * Implementar as funções que correspondem as operações do array dinâmico (implemente-as em [vetor.cpp](/vetor.cpp))
 
 ## Teste do array dinâmico
