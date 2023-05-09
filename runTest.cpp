@@ -108,7 +108,7 @@ TEST_F(TesteDynarray, AnexarComExpansao) {
         prg2::vetor_anexa(v, j);
         ASSERT_EQ(prg2::vetor_atras(v), j);
         ASSERT_EQ(prg2::vetor_tamanho(v), j+1);
-        ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize*ceilf((float)j/prg2::MinSize));
+        ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize*ceilf((float)(j+1)/prg2::MinSize));
     }
 }
 
@@ -119,7 +119,7 @@ TEST_F(TesteDynarray, InserirComExpansao) {
         prg2::vetor_insere(v, j);
         ASSERT_EQ(prg2::vetor_frente(v), j);
         ASSERT_EQ(prg2::vetor_tamanho(v), j+1);
-        ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize*ceilf((float)j/prg2::MinSize));
+        ASSERT_EQ(prg2::vetor_capacidade(v), prg2::MinSize*ceilf((float)(j+1)/prg2::MinSize));
     }
 }
 
@@ -200,12 +200,12 @@ TEST_F(TesteDynarray, InserePosicao) {
     }
     auto len = prg2::vetor_tamanho(v);
     // no meio
-    prg2::vetor_insere(v, 11, len/2);
+    prg2::vetor_insere(v, len/2, 11);
     ASSERT_EQ(prg2::vetor_obtem(v, len/2), 11);
     ASSERT_EQ(prg2::vetor_tamanho(v), len+1);
 
     // no inicio
-    prg2::vetor_insere(v, 55, 0);
+    prg2::vetor_insere(v, 0, 55);
     ASSERT_EQ(prg2::vetor_frente(v), 55);
     ASSERT_EQ(prg2::vetor_tamanho(v), len+2);
 
@@ -215,7 +215,7 @@ TEST_F(TesteDynarray, InserePosicao) {
 //    ASSERT_EQ(prg2::vetor_tamanho(v), len+3);
 
     // posição inválida
-    ASSERT_THROW(prg2::vetor_insere(v, 11, 2*len), std::invalid_argument);
+    ASSERT_THROW(prg2::vetor_insere(v, 2*len, 11), std::invalid_argument);
 //    ASSERT_EQ(prg2::vetor_atras(v), 77);
 //    ASSERT_EQ(prg2::vetor_tamanho(v), len+3);
 
